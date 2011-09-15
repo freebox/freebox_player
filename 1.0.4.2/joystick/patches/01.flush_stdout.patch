@@ -1,0 +1,13 @@
+Flush the output, to ensure redirection works. Fix suggested by Floran
+Fainelli; see http://bugs.debian.org/581740
+
+--- joystick-20051019.orig/utils/evtest.c
++++ joystick-20051019/utils/evtest.c
+@@ -386,5 +386,7 @@
+ 					ev[i].value);
+ 			}	
+ 
++		fflush(stdout);
++
+ 	}
+ }

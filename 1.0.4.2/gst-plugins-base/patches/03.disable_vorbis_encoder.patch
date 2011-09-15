@@ -1,0 +1,142 @@
+diff -ru gst-plugins-base-0.10.32/ext/vorbis/gstvorbis.c src/ext/vorbis/gstvorbis.c
+--- gst-plugins-base-0.10.32/ext/vorbis/gstvorbis.c	2010-03-30 21:31:33.000000000 +0200
++++ src/ext/vorbis/gstvorbis.c	2011-02-06 20:27:50.205071997 +0100
+@@ -23,23 +23,15 @@
+ 
+ #include "gst/tag/tag.h"
+ 
+-#include "gstvorbisenc.h"
+ #include "gstvorbisdec.h"
+ #include "gstvorbisparse.h"
+-#include "gstvorbistag.h"
+ 
+-GST_DEBUG_CATEGORY (vorbisenc_debug);
+ GST_DEBUG_CATEGORY (vorbisdec_debug);
+ GST_DEBUG_CATEGORY (vorbisparse_debug);
+-GST_DEBUG_CATEGORY (vorbistag_debug);
+ 
+ static gboolean
+ plugin_init (GstPlugin * plugin)
+ {
+-  if (!gst_element_register (plugin, "vorbisenc", GST_RANK_PRIMARY,
+-          GST_TYPE_VORBISENC))
+-    return FALSE;
+-
+   if (!gst_element_register (plugin, "vorbisdec", GST_RANK_PRIMARY,
+           gst_vorbis_dec_get_type ()))
+     return FALSE;
+@@ -48,18 +40,10 @@
+           gst_vorbis_parse_get_type ()))
+     return FALSE;
+ 
+-  if (!gst_element_register (plugin, "vorbistag", GST_RANK_NONE,
+-          gst_vorbis_tag_get_type ()))
+-    return FALSE;
+-
+-  GST_DEBUG_CATEGORY_INIT (vorbisenc_debug, "vorbisenc", 0,
+-      "vorbis encoding element");
+   GST_DEBUG_CATEGORY_INIT (vorbisdec_debug, "vorbisdec", 0,
+       "vorbis decoding element");
+   GST_DEBUG_CATEGORY_INIT (vorbisparse_debug, "vorbisparse", 0,
+       "vorbis parsing element");
+-  GST_DEBUG_CATEGORY_INIT (vorbistag_debug, "vorbistag", 0,
+-      "vorbis tagging element");
+ 
+   gst_tag_register_musicbrainz_tags ();
+ 
+diff -ru gst-plugins-base-0.10.32/ext/vorbis/Makefile.am src/ext/vorbis/Makefile.am
+--- gst-plugins-base-0.10.32/ext/vorbis/Makefile.am	2010-03-30 21:31:33.000000000 +0200
++++ src/ext/vorbis/Makefile.am	2011-02-06 20:28:42.835071994 +0100
+@@ -6,9 +6,7 @@
+ libgstvorbis_la_SOURCES = gstvorbis.c \
+ 			  gstvorbisdec.c \
+ 			  gstvorbisdeclib.c \
+-			  gstvorbisenc.c \
+ 			  gstvorbisparse.c \
+-			  gstvorbistag.c \
+ 			  gstvorbiscommon.c
+ 
+ libgstvorbis_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_CFLAGS) $(VORBIS_CFLAGS)
+@@ -17,7 +15,7 @@
+ 	$(top_builddir)/gst-libs/gst/tag/libgsttag-@GST_MAJORMINOR@.la \
+ 	$(top_builddir)/gst-libs/gst/audio/libgstaudio-@GST_MAJORMINOR@.la \
+ 	$(GST_LIBS) \
+-	$(VORBIS_LIBS) $(VORBISENC_LIBS)
++	$(VORBIS_LIBS)
+ libgstvorbis_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
+ libgstvorbis_la_LIBTOOLFLAGS = --tag=disable-static
+ endif
+diff -ru gst-plugins-base-0.10.32/ext/vorbis/Makefile.in src/ext/vorbis/Makefile.in
+--- gst-plugins-base-0.10.32/ext/vorbis/Makefile.in	2011-01-21 11:13:09.000000000 +0100
++++ src/ext/vorbis/Makefile.in	2011-02-06 20:30:23.615071994 +0100
+@@ -131,15 +131,13 @@
+ @USE_VORBIS_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+ @USE_VORBIS_TRUE@	$(am__DEPENDENCIES_1)
+ am__libgstvorbis_la_SOURCES_DIST = gstvorbis.c gstvorbisdec.c \
+-	gstvorbisdeclib.c gstvorbisenc.c gstvorbisparse.c \
+-	gstvorbistag.c gstvorbiscommon.c
++	gstvorbisdeclib.c gstvorbisparse.c \
++	gstvorbiscommon.c
+ @USE_VORBIS_TRUE@am_libgstvorbis_la_OBJECTS =  \
+ @USE_VORBIS_TRUE@	libgstvorbis_la-gstvorbis.lo \
+ @USE_VORBIS_TRUE@	libgstvorbis_la-gstvorbisdec.lo \
+ @USE_VORBIS_TRUE@	libgstvorbis_la-gstvorbisdeclib.lo \
+-@USE_VORBIS_TRUE@	libgstvorbis_la-gstvorbisenc.lo \
+ @USE_VORBIS_TRUE@	libgstvorbis_la-gstvorbisparse.lo \
+-@USE_VORBIS_TRUE@	libgstvorbis_la-gstvorbistag.lo \
+ @USE_VORBIS_TRUE@	libgstvorbis_la-gstvorbiscommon.lo
+ libgstvorbis_la_OBJECTS = $(am_libgstvorbis_la_OBJECTS)
+ libgstvorbis_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+@@ -469,9 +467,7 @@
+ @USE_VORBIS_TRUE@libgstvorbis_la_SOURCES = gstvorbis.c \
+ @USE_VORBIS_TRUE@			  gstvorbisdec.c \
+ @USE_VORBIS_TRUE@			  gstvorbisdeclib.c \
+-@USE_VORBIS_TRUE@			  gstvorbisenc.c \
+ @USE_VORBIS_TRUE@			  gstvorbisparse.c \
+-@USE_VORBIS_TRUE@			  gstvorbistag.c \
+ @USE_VORBIS_TRUE@			  gstvorbiscommon.c
+ 
+ @USE_VORBIS_TRUE@libgstvorbis_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_CFLAGS) $(VORBIS_CFLAGS)
+@@ -479,7 +475,7 @@
+ @USE_VORBIS_TRUE@	$(top_builddir)/gst-libs/gst/tag/libgsttag-@GST_MAJORMINOR@.la \
+ @USE_VORBIS_TRUE@	$(top_builddir)/gst-libs/gst/audio/libgstaudio-@GST_MAJORMINOR@.la \
+ @USE_VORBIS_TRUE@	$(GST_LIBS) \
+-@USE_VORBIS_TRUE@	$(VORBIS_LIBS) $(VORBISENC_LIBS)
++@USE_VORBIS_TRUE@	$(VORBIS_LIBS)
+ 
+ @USE_VORBIS_TRUE@libgstvorbis_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
+ @USE_VORBIS_TRUE@libgstvorbis_la_LIBTOOLFLAGS = --tag=disable-static
+@@ -587,9 +583,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstvorbis_la-gstvorbiscommon.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstvorbis_la-gstvorbisdec.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstvorbis_la-gstvorbisdeclib.Plo@am__quote@
+-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstvorbis_la-gstvorbisenc.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstvorbis_la-gstvorbisparse.Plo@am__quote@
+-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstvorbis_la-gstvorbistag.Plo@am__quote@
+ 
+ .c.o:
+ @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+diff -ru gst-plugins-base-0.10.32/configure src/configure
+--- gst-plugins-base-0.10.32/configure	2011-01-21 11:12:52.000000000 +0100
++++ src/configure	2011-02-06 20:49:43.305071996 +0100
+@@ -29681,7 +29681,7 @@
+   HAVE_VORBIS=no
+ 
+ 
+-  which="vorbis >= 1.0 vorbisenc >= 1.0"
++  which="vorbis >= 1.0"
+     required="no"
+ 
+ 
+diff -ru gst-plugins-base-0.10.32/configure.ac src/configure.ac
+--- gst-plugins-base-0.10.32/configure.ac	2011-01-21 11:10:48.000000000 +0100
++++ src/configure.ac	2011-02-06 20:50:31.735071998 +0100
+@@ -786,7 +786,7 @@
+ dnl AM_PATH_VORBIS only takes two options
+ translit(dnm, m, l) AM_CONDITIONAL(USE_VORBIS, true)
+ AG_GST_CHECK_FEATURE(VORBIS, [Xiph Vorbis audio codec], vorbis, [
+-  AG_GST_PKG_CHECK_MODULES(VORBIS, vorbis >= 1.0 vorbisenc >= 1.0)
++  AG_GST_PKG_CHECK_MODULES(VORBIS, vorbis >= 1.0)
+   if test $HAVE_VORBIS = no
+   then
+     XIPH_PATH_VORBIS(HAVE_VORBIS="yes", HAVE_VORBIS="no")

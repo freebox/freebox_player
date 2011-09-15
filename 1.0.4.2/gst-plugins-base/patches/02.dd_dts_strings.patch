@@ -1,0 +1,37 @@
+diff -ru gst-plugins-base-0.10.30.4.orig/gst-libs/gst/pbutils/descriptions.c gst-plugins-base-0.10.30.4/gst-libs/gst/pbutils/descriptions.c
+--- gst-plugins-base-0.10.30.4.orig/gst-libs/gst/pbutils/descriptions.c	2010-10-29 15:04:07.000000000 +0200
++++ gst-plugins-base-0.10.30.4/gst-libs/gst/pbutils/descriptions.c	2010-11-05 23:19:24.900751007 +0100
+@@ -84,10 +84,10 @@
+   {"video/mj2", "Motion JPEG 2000", FLAG_CONTAINER},
+ 
+   /* audio formats with static descriptions */
+-  {"audio/x-ac3", "AC-3 (ATSC A/52)", 0},
+-  {"audio/ac3", "AC-3 (ATSC A/52)", 0},
+-  {"audio/x-private-ac3", "DVD AC-3 (ATSC A/52)", 0},
+-  {"audio/x-private1-ac3", "DVD AC-3 (ATSC A/52)", 0},
++  {"audio/x-ac3", "Dolby Digital", 0},
++  {"audio/ac3", "Dolby Digital", 0},
++  {"audio/x-private-ac3", "Dolby Digital", 0},
++  {"audio/x-private1-ac3", "Dolby Digital", 0},
+   {"audio/x-alaw", "A-Law", 0},
+   {"audio/amr", "Adaptive Multi Rate (AMR)", 0},
+   {"audio/AMR", "Adaptive Multi Rate (AMR)", 0},
+diff -ru gst-plugins-base-0.10.30.4.orig/gst-libs/gst/riff/riff-media.c gst-plugins-base-0.10.30.4/gst-libs/gst/riff/riff-media.c
+--- gst-plugins-base-0.10.30.4.orig/gst-libs/gst/riff/riff-media.c	2010-08-31 19:44:18.000000000 +0200
++++ gst-plugins-base-0.10.30.4/gst-libs/gst/riff/riff-media.c	2010-11-05 23:19:48.050751000 +0100
+@@ -1351,13 +1351,13 @@
+       channels_max = 6;
+       caps = gst_caps_new_simple ("audio/x-ac3", NULL);
+       if (codec_name)
+-        *codec_name = g_strdup ("AC-3 audio");
++        *codec_name = g_strdup ("Dolby Digital");
+       break;
+     case GST_RIFF_WAVE_FORMAT_DTS:
+       channels_max = 6;
+       caps = gst_caps_new_simple ("audio/x-dts", NULL);
+       if (codec_name)
+-        *codec_name = g_strdup ("DTS audio");
++        *codec_name = g_strdup ("DTS");
+       /* wavparse is not always able to specify rate/channels for DTS-in-wav */
+       rate_chan = FALSE;
+       break;

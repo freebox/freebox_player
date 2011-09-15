@@ -1,0 +1,22 @@
+--- elfutils-0.148/libdw/Makefile.am	2010-06-28 21:05:56.000000000 +0200
++++ src/libdw/Makefile.am	2010-08-21 06:23:51.866682748 +0200
+@@ -108,7 +108,7 @@
+ 		-Wl,--enable-new-dtags,-rpath,$(pkglibdir) \
+ 		-Wl,--version-script,$<,--no-undefined \
+ 		-Wl,--whole-archive $(filter-out $<,$^) -Wl,--no-whole-archive\
+-		-ldl $(zip_LIBS)
++		-ldl $(zip_LIBS) $(LDFLAGS)
+ 	if readelf -d $@ | fgrep -q TEXTREL; then exit 1; fi
+ 	ln -fs $@ $@.$(VERSION)
+ 
+--- elfutils-0.148/libdw/Makefile.in	2010-06-28 21:07:33.000000000 +0200
++++ src/libdw/Makefile.in	2010-08-21 06:24:04.586694166 +0200
+@@ -835,7 +837,7 @@
+ @MUDFLAP_FALSE@		-Wl,--enable-new-dtags,-rpath,$(pkglibdir) \
+ @MUDFLAP_FALSE@		-Wl,--version-script,$<,--no-undefined \
+ @MUDFLAP_FALSE@		-Wl,--whole-archive $(filter-out $<,$^) -Wl,--no-whole-archive\
+-@MUDFLAP_FALSE@		-ldl $(zip_LIBS)
++@MUDFLAP_FALSE@		-ldl $(zip_LIBS) $(LDFLAGS)
+ @MUDFLAP_FALSE@	if readelf -d $@ | fgrep -q TEXTREL; then exit 1; fi
+ @MUDFLAP_FALSE@	ln -fs $@ $@.$(VERSION)
+ 

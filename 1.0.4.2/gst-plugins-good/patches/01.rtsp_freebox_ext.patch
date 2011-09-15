@@ -1,0 +1,89 @@
+diff -ru gst-plugins-good-0.10.27.orig/gst/rtsp/gstrtspsrc.c gst-plugins-good-0.10.27/gst/rtsp/gstrtspsrc.c
+--- gst-plugins-good-0.10.27.orig/gst/rtsp/gstrtspsrc.c	2011-01-24 14:54:01.415072001 +0100
++++ gst-plugins-good-0.10.27/gst/rtsp/gstrtspsrc.c	2011-01-24 14:55:56.545071998 +0100
+@@ -4960,6 +4960,14 @@
+       goto create_request_failed;
+     }
+ 
++    /* add custom freebox headers */
++    if (src->freebox_ext) {
++      gst_rtsp_message_add_header (&request,
++          GST_RTSP_HDR_X_FREEBOX_MODEL, "fbxhd");
++      gst_rtsp_message_add_header (&request,
++          GST_RTSP_HDR_X_FREEBOX_CAPABILITIES, "ld,sd,hd,16_9,ac3");
++    }
++
+     /* select transport, copy is made when adding to header so we can free it. */
+     gst_rtsp_message_add_header (&request, GST_RTSP_HDR_TRANSPORT, transports);
+     g_free (transports);
+@@ -5122,6 +5130,29 @@
+ response_error:
+   {
+     const gchar *str = gst_rtsp_status_as_text (code);
++    GstStructure *structure;
++
++    structure = gst_structure_new ("rtsp-error",
++        "code", G_TYPE_INT, code, NULL);
++
++    if (src->freebox_ext) {
++      gchar *value;
++
++      gst_rtsp_message_get_header (&response,
++          GST_RTSP_HDR_X_FREEBOX_MISSING_BANDWIDTH, &value, 0);
++      if (value)
++        gst_structure_set (structure,
++            "missing-bandwidth", G_TYPE_INT, atoi (value), NULL);
++
++      gst_rtsp_message_get_header (&response,
++          GST_RTSP_HDR_X_FREEBOX_ERROR, &value, 0);
++      if (value)
++        gst_structure_set (structure,
++            "ext-code", G_TYPE_INT, atoi (value), NULL);
++    }
++
++    gst_element_post_message (GST_ELEMENT (src),
++        gst_message_new_element (GST_OBJECT(src), structure));
+ 
+     GST_ELEMENT_ERROR (src, RESOURCE, WRITE, (NULL),
+         ("Error (%d): %s", code, GST_STR_NULL (str)));
+@@ -5326,6 +5357,20 @@
+   }
+ }
+ 
++static void
++gst_rtspsrc_detect_server (GstRTSPSrc * src, GstRTSPMessage * response)
++{
++  gchar *value;
++
++  src->freebox_ext = FALSE;
++
++  gst_rtsp_message_get_header (response, GST_RTSP_HDR_SERVER, &value, 0);
++  if (value) {
++    if (g_str_has_prefix (value, "fbxrtspd"))
++      src->freebox_ext = TRUE;
++  }
++}
++
+ static gboolean
+ gst_rtspsrc_retrieve_sdp (GstRTSPSrc * src, GstSDPMessage ** sdp)
+ {
+@@ -5361,6 +5406,8 @@
+           NULL) < 0)
+     goto send_error;
+ 
++  gst_rtspsrc_detect_server (src, &response);
++
+   /* parse OPTIONS */
+   if (!gst_rtspsrc_parse_methods (src, &response))
+     goto methods_error;
+diff -ru gst-plugins-good-0.10.27.orig/gst/rtsp/gstrtspsrc.h gst-plugins-good-0.10.27/gst/rtsp/gstrtspsrc.h
+--- gst-plugins-good-0.10.27.orig/gst/rtsp/gstrtspsrc.h	2011-01-24 14:54:01.415072001 +0100
++++ gst-plugins-good-0.10.27/gst/rtsp/gstrtspsrc.h	2011-01-24 14:56:06.585071996 +0100
+@@ -197,6 +197,7 @@
+   GList           *streams;
+   GstStructure    *props;
+   gboolean         need_activate;
++  gboolean         freebox_ext;
+ 
+   /* properties */
+   GstRTSPLowerTrans protocols;

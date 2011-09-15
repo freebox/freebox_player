@@ -1,0 +1,35 @@
+diff -ru src.orig/gst/mpegdemux/gstmpegdemux.c src/gst/mpegdemux/gstmpegdemux.c
+--- src.orig/gst/mpegdemux/gstmpegdemux.c	2010-09-23 17:54:07.000000000 +0200
++++ src/gst/mpegdemux/gstmpegdemux.c	2011-03-01 02:34:58.295303001 +0100
+@@ -1996,8 +1996,6 @@
+     if (stream_type == -1) {
+       /* no stream type, if PS1, get the new id */
+       if (start_code == ID_PRIVATE_STREAM_1 && datalen >= 2) {
+-        guint8 nframes;
+-
+         /* VDR writes A52 streams without any header bytes
+          * (see ftp://ftp.mplayerhq.hu/MPlayer/samples/MPEG-VOB/vdr-AC3) */
+         if (datalen >= 4) {
+@@ -2017,20 +2015,8 @@
+ 
+           /* and remap */
+           stream_type = demux->psm[id];
+-
+-          /* Now, if it's a subpicture stream - no more, otherwise
+-           * take the first byte too, since it's the frame count in audio
+-           * streams and our backwards compat convention is to strip it off */
+-          if (stream_type != ST_PS_DVD_SUBPICTURE) {
+-            /* Number of audio frames in this packet */
+-            nframes = data[offset++];
+-            datalen--;
+-            GST_DEBUG_OBJECT (demux, "private type 0x%02x, %d frames", id,
+-                nframes);
+-          } else {
+-            GST_DEBUG_OBJECT (demux, "private type 0x%02x, stream type %d", id,
+-                stream_type);
+-          }
++          GST_DEBUG_OBJECT (demux, "private type 0x%02x, stream type %d", id,
++              stream_type);
+         }
+       }
+       if (stream_type == -1)

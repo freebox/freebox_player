@@ -1,0 +1,14 @@
+diff -ru src.orig/ext/soup/gstsouphttpsrc.c src/ext/soup/gstsouphttpsrc.c
+--- src.orig/ext/soup/gstsouphttpsrc.c	2010-11-29 18:32:50.000000000 +0100
++++ src/ext/soup/gstsouphttpsrc.c	2011-01-18 19:54:58.535071995 +0100
+@@ -885,10 +885,6 @@
+     return;
+   }
+   GST_DEBUG_OBJECT (src, "got body");
+-  src->ret = GST_FLOW_UNEXPECTED;
+-  if (src->loop)
+-    g_main_loop_quit (src->loop);
+-  gst_soup_http_src_session_pause_message (src);
+ }
+ 
+ /* Finished. Signal EOS. */

@@ -1,0 +1,11 @@
+--- SDL_mixer-1.2.11/Makefile.in	2009-10-13 01:06:53.000000000 +0200
++++ src/Makefile.in	2010-11-16 10:36:06.000000000 +0100
+@@ -46,7 +46,7 @@
+ LT_REVISION = @LT_REVISION@
+ LT_LDFLAGS  = -no-undefined -rpath $(libdir) -release $(LT_RELEASE) -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+ 
+-all: $(srcdir)/configure Makefile $(objects) $(objects)/$(TARGET) $(objects)/playwave$(EXE) $(objects)/playmus$(EXE)
++all: $(srcdir)/configure Makefile $(objects) $(objects)/$(TARGET)
+ 
+ $(srcdir)/configure: $(srcdir)/configure.in
+ 	@echo "Warning, configure.in is out of date"

@@ -1,0 +1,25 @@
+diff -ru gst-plugins-good-0.10.27.orig/gst/matroska/matroska-demux.c gst-plugins-good-0.10.27/gst/matroska/matroska-demux.c
+--- gst-plugins-good-0.10.27.orig/gst/matroska/matroska-demux.c	2011-02-11 11:57:22.015071994 +0100
++++ gst-plugins-good-0.10.27/gst/matroska/matroska-demux.c	2011-02-11 11:56:44.095071994 +0100
+@@ -6720,6 +6720,10 @@
+     caps = gst_caps_new_simple ("audio/x-eac3",
+         "framed", G_TYPE_BOOLEAN, TRUE, NULL);
+     *codec_name = g_strdup ("Dolby Digital Plus");
++  } else if (!strncmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_TRUEHD,
++          strlen (GST_MATROSKA_CODEC_ID_AUDIO_TRUEHD))) {
++    caps = gst_caps_new_simple ("audio/x-true-hd", NULL);
++    *codec_name = g_strdup ("Dolby TrueHD");
+   } else if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_DTS)) {
+     caps = gst_caps_new_simple ("audio/x-dts", NULL);
+     *codec_name = g_strdup ("DTS");
+diff -ru gst-plugins-good-0.10.27.orig/gst/matroska/matroska-ids.h gst-plugins-good-0.10.27/gst/matroska/matroska-ids.h
+--- gst-plugins-good-0.10.27.orig/gst/matroska/matroska-ids.h	2010-10-17 19:24:46.000000000 +0200
++++ gst-plugins-good-0.10.27/gst/matroska/matroska-ids.h	2011-02-11 11:54:12.145071996 +0100
+@@ -356,6 +356,7 @@
+ #define GST_MATROSKA_CODEC_ID_AUDIO_AC3_BSID9      "A_AC3/BSID9"
+ #define GST_MATROSKA_CODEC_ID_AUDIO_AC3_BSID10     "A_AC3/BSID10"
+ #define GST_MATROSKA_CODEC_ID_AUDIO_EAC3           "A_EAC3"
++#define GST_MATROSKA_CODEC_ID_AUDIO_TRUEHD         "A_TRUEHD"
+ #define GST_MATROSKA_CODEC_ID_AUDIO_DTS            "A_DTS"
+ #define GST_MATROSKA_CODEC_ID_AUDIO_VORBIS         "A_VORBIS"
+ #define GST_MATROSKA_CODEC_ID_AUDIO_FLAC           "A_FLAC"

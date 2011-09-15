@@ -1,0 +1,12 @@
+diff -ru gst-plugins-base-0.10.29.orig/configure gst-plugins-base-0.10.29/configure
+--- gst-plugins-base-0.10.29.orig/configure	2010-05-16 02:08:44.305489951 +0200
++++ gst-plugins-base-0.10.29/configure	2010-05-16 02:10:08.895444995 +0200
+@@ -24894,7 +24894,7 @@
+ fi
+ 
+ 
+-if test "x$HAVE_LIBXML_HTML" != "xyes"; then
++if false; then
+ 
+   GST_PLUGINS_SELECTED=`echo " $GST_PLUGINS_SELECTED " | $SED -e 's/ subparse / /'`
+    if false; then

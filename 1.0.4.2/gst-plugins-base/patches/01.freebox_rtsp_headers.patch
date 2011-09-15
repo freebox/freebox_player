@@ -1,0 +1,36 @@
+diff -ru src2/gst-libs/gst/rtsp/gstrtspdefs.c src/gst-libs/gst/rtsp/gstrtspdefs.c
+--- src2/gst-libs/gst/rtsp/gstrtspdefs.c	2009-10-14 16:43:17.000000000 +0200
++++ src/gst-libs/gst/rtsp/gstrtspdefs.c	2009-10-14 16:44:53.000000000 +0200
+@@ -206,6 +206,14 @@
+   {"X-Server-IP-Address", FALSE},
+   {"X-Sessioncookie", FALSE},
+ 
++  /* Freebox extensions */
++  {"X-Freebox-PVR", FALSE},
++  {"X-Freebox-Capabilities", FALSE},
++  {"X-Freebox-Preferred-Capabilities", FALSE},
++  {"X-Freebox-Model", FALSE},
++  {"X-Freebox-Error", FALSE},
++  {"X-Freebox-Missing-Bandwidth", FALSE},
++
+   {NULL, FALSE}
+ };
+ 
+diff -ru src2/gst-libs/gst/rtsp/gstrtspdefs.h src/gst-libs/gst/rtsp/gstrtspdefs.h
+--- src2/gst-libs/gst/rtsp/gstrtspdefs.h	2009-10-14 16:43:17.000000000 +0200
++++ src/gst-libs/gst/rtsp/gstrtspdefs.h	2009-10-14 16:43:50.000000000 +0200
+@@ -326,6 +326,14 @@
+   GST_RTSP_HDR_X_SERVER_IP_ADDRESS, /* X-Server-IP-Address */
+   GST_RTSP_HDR_X_SESSIONCOOKIE,     /* X-Sessioncookie */
+ 
++  /* Freebox Extensions */
++  GST_RTSP_HDR_X_FREEBOX_PVR,
++  GST_RTSP_HDR_X_FREEBOX_CAPABILITIES,
++  GST_RTSP_HDR_X_FREEBOX_PREFERRED_CAPABILITIES,
++  GST_RTSP_HDR_X_FREEBOX_MODEL,
++  GST_RTSP_HDR_X_FREEBOX_ERROR,
++  GST_RTSP_HDR_X_FREEBOX_MISSING_BANDWIDTH,
++
+   GST_RTSP_HDR_LAST
+ } GstRTSPHeaderField;
+ 

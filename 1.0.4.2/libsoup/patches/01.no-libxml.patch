@@ -1,0 +1,92 @@
+diff -ru src.orig/configure.ac src/configure.ac
+--- src.orig/configure.ac	2010-05-03 18:07:06.243875431 +0200
++++ src/configure.ac	2010-05-03 18:31:02.593797124 +0200
+@@ -78,7 +78,7 @@
+ fi
+ GLIB_CFLAGS="$GLIB_CFLAGS -DG_DISABLE_SINGLE_INCLUDES"
+ 
+-PKG_CHECK_MODULES(XML, libxml-2.0)
++#PKG_CHECK_MODULES(XML, libxml-2.0)
+ AC_SUBST(XML_CFLAGS)
+ AC_SUBST(XML_LIBS)
+ 
+diff -ru src.orig/libsoup/Makefile.am src/libsoup/Makefile.am
+--- src.orig/libsoup/Makefile.am	2010-05-03 18:07:06.253723883 +0200
++++ src/libsoup/Makefile.am	2010-05-03 18:31:02.593797124 +0200
+@@ -10,7 +10,6 @@
+ 	$(SOUP_DEBUG_FLAGS)		\
+ 	$(SOUP_MAINTAINER_FLAGS)	\
+ 	$(GLIB_CFLAGS)			\
+-	$(XML_CFLAGS)			\
+ 	$(GCONF_CFLAGS)			\
+ 	$(LIBPROXY_CFLAGS)		\
+ 	$(SQLITE_CFLAGS)		\
+@@ -84,8 +83,7 @@
+ 	soup-status.h		\
+ 	soup-types.h		\
+ 	soup-uri.h		\
+-	soup-value-utils.h	\
+-	soup-xmlrpc.h
++	soup-value-utils.h
+ 
+ libsoupinclude_HEADERS =	\
+ 	$(soup_headers)		\
+@@ -98,7 +96,6 @@
+ 
+ libsoup_2_4_la_LIBADD =			\
+ 	$(GLIB_LIBS)			\
+-	$(XML_LIBS)			\
+ 	-lz				\
+ 	$(LIBGNUTLS_LIBS_STATIC)	\
+ 	$(LIBGNUTLS_LIBS)		\
+@@ -168,8 +165,7 @@
+ 	soup-ssl.h			\
+ 	soup-status.c			\
+ 	soup-uri.c			\
+-	soup-value-utils.c		\
+-	soup-xmlrpc.c
++	soup-value-utils.c
+ 
+ if BUILD_LIBSOUP_GNOME
+ 
+@@ -205,4 +201,4 @@
+ EXTRA_DIST=				\
+ 	soup-marshal.list		\
+ 	soup-enum-types.h.tmpl		\
+-	soup-enum-types.c.tmpl
+\ No newline at end of file
++	soup-enum-types.c.tmpl
+diff -ru src.orig/libsoup/soup.h src/libsoup/soup.h
+--- src.orig/libsoup/soup.h	2010-05-03 18:07:06.253723883 +0200
++++ src/libsoup/soup.h	2010-05-03 18:32:21.193791441 +0200
+@@ -40,7 +40,6 @@
+ #include <libsoup/soup-status.h>
+ #include <libsoup/soup-uri.h>
+ #include <libsoup/soup-value-utils.h>
+-#include <libsoup/soup-xmlrpc.h>
+ 
+ #ifdef __cplusplus
+ }
+diff -ru src.orig/libsoup-2.4.pc.in src/libsoup-2.4.pc.in
+--- src.orig/libsoup-2.4.pc.in	2010-05-03 18:07:06.243875431 +0200
++++ src/libsoup-2.4.pc.in	2010-05-03 18:31:02.593797124 +0200
+@@ -7,6 +7,6 @@
+ Description: a glib-based HTTP library
+ Version: @VERSION@
+ Requires: glib-2.0 gobject-2.0 gio-2.0
+-Requires.private: libxml-2.0 @SSL_REQUIREMENT@
++Requires.private: @SSL_REQUIREMENT@
+ Libs: -L${libdir} -lsoup-2.4
+ Cflags: -I${includedir}/libsoup-2.4
+diff -ru src.orig/Makefile.am src/Makefile.am
+--- src.orig/Makefile.am	2010-05-03 18:07:06.243875431 +0200
++++ src/Makefile.am	2010-05-03 18:31:02.593797124 +0200
+@@ -1,7 +1,7 @@
+ ## Process this file with automake to produce Makefile.in
+ ACLOCAL_AMFLAGS = -I m4
+ 
+-SUBDIRS = libsoup tests docs
++SUBDIRS = libsoup
+ 
+ EXTRA_DIST =			\
+ 	libsoup-2.4.pc.in	\

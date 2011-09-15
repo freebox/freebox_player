@@ -1,0 +1,41 @@
+diff -ru gst-plugins-base-0.10.30.4/gst/playback/gstplaysink.c src/gst/playback/gstplaysink.c
+--- gst-plugins-base-0.10.30.4/gst/playback/gstplaysink.c	2010-10-29 15:04:07.000000000 +0200
++++ src/gst/playback/gstplaysink.c	2010-11-03 22:25:44.680750999 +0100
+@@ -1247,6 +1247,7 @@
+   gst_object_ref_sink (bin);
+   gst_bin_add (bin, chain->sink);
+ 
++#if 0
+   /* decouple decoder from sink, this improves playback quite a lot since the
+    * decoder can continue while the sink blocks for synchronisation. We don't
+    * need a lot of buffers as this consumes a lot of memory and we don't want
+@@ -1265,6 +1266,10 @@
+     gst_bin_add (bin, chain->queue);
+     head = prev = chain->queue;
+   }
++#else
++  head = chain->sink;
++  prev = NULL;
++#endif
+ 
+   if (raw && !(playsink->flags & GST_PLAY_FLAG_NATIVE_VIDEO)) {
+     GST_DEBUG_OBJECT (playsink, "creating ffmpegcolorspace");
+@@ -1680,6 +1685,7 @@
+   gst_object_ref_sink (bin);
+   gst_bin_add (bin, chain->sink);
+ 
++#if 0
+   /* we have to add a queue when we need to decouple for the video sink in
+    * visualisations */
+   GST_DEBUG_OBJECT (playsink, "adding audio queue");
+@@ -1696,6 +1702,10 @@
+     gst_bin_add (bin, chain->queue);
+     prev = head = chain->queue;
+   }
++#else
++  head = chain->sink;
++  prev = NULL;
++#endif
+ 
+   /* find ts-offset element */
+   chain->ts_offset =

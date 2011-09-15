@@ -1,0 +1,48 @@
+--- elfutils-0.148/libdwfl/dwfl_build_id_find_elf.c	2010-05-28 16:38:30.000000000 +0200
++++ src/libdwfl/dwfl_build_id_find_elf.c	2010-08-20 09:29:52.857948539 +0200
+@@ -52,6 +52,12 @@
+ #include <fcntl.h>
+ #include <unistd.h>
+ 
++static char *my_canonicalize_file_name(const char *foo)
++{
++	char buf[PATH_MAX];
++	realpath(foo, buf);
++	return strdup(buf);
++}
+ 
+ int
+ internal_function
+@@ -109,7 +115,7 @@
+ 	{
+ 	  if (*file_name != NULL)
+ 	    free (*file_name);
+-	  *file_name = canonicalize_file_name (name);
++	  *file_name = my_canonicalize_file_name (name);
+ 	  if (*file_name == NULL)
+ 	    {
+ 	      *file_name = name;
+--- elfutils-0.148/libdwfl/find-debuginfo.c	2010-06-14 23:18:17.000000000 +0200
++++ src/libdwfl/find-debuginfo.c	2010-08-20 09:29:22.296684496 +0200
+@@ -54,6 +54,12 @@
+ #include <sys/stat.h>
+ #include "system.h"
+ 
++static char *my_canonicalize_file_name(const char *foo)
++{
++	char buf[PATH_MAX];
++	realpath(foo, buf);
++	return strdup(buf);
++}
+ 
+ /* Try to open64 [DIR/][SUBDIR/]DEBUGLINK, return file descriptor or -1.
+    On success, *DEBUGINFO_FILE_NAME has the malloc'd name of the open file.  */
+@@ -279,7 +285,7 @@
+       /* If FILE_NAME is a symlink, the debug file might be associated
+ 	 with the symlink target name instead.  */
+ 
+-      char *canon = canonicalize_file_name (file_name);
++      char *canon = my_canonicalize_file_name (file_name);
+       if (canon != NULL && strcmp (file_name, canon))
+ 	fd = find_debuginfo_in_path (mod, canon,
+ 				     debuglink_file, debuglink_crc,

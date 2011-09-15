@@ -1,0 +1,26 @@
+--- elfutils-0.148/Makefile.am	2009-02-11 02:14:48.000000000 +0100
++++ src/Makefile.am	2010-08-20 10:22:58.046663111 +0200
+@@ -30,8 +30,8 @@
+ pkginclude_HEADERS = version.h
+ 
+ # Add doc back when we have some real content.
+-SUBDIRS = config m4 lib libelf libebl libdwfl libdw libcpu libasm backends \
+-	  src po tests
++SUBDIRS = config m4 lib libelf libebl libdwfl libdw libasm \
++	  po
+ 
+ EXTRA_DIST = elfutils.spec GPG-KEY NOTES EXCEPTION
+ 
+--- elfutils-0.148/Makefile.in	2010-06-28 21:07:33.000000000 +0200
++++ src/Makefile.in	2010-08-20 10:22:54.406657423 +0200
+@@ -246,8 +248,8 @@
+ pkginclude_HEADERS = version.h
+ 
+ # Add doc back when we have some real content.
+-SUBDIRS = config m4 lib libelf libebl libdwfl libdw libcpu libasm backends \
+-	  src po tests
++SUBDIRS = config m4 lib libelf libebl libdwfl libdw libasm \
++	  po
+ 
+ EXTRA_DIST = elfutils.spec GPG-KEY NOTES EXCEPTION
+ 

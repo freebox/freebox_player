@@ -1,0 +1,11 @@
+--- elfutils-0.148//libdwfl/dwfl_module_getdwarf.c	2010-05-28 16:38:30.000000000 +0200
++++ src//libdwfl/dwfl_module_getdwarf.c	2010-08-20 09:27:16.077030286 +0200
+@@ -118,7 +118,7 @@
+ 		  if ((mod->low_addr & (ph->p_align - 1)) == 0)
+ 		    align = ph->p_align;
+ 		  else
+-		    align = ((GElf_Addr) 1 << ffsll (mod->low_addr)) >> 1;
++		    align = ((GElf_Addr) 1 << ffs (mod->low_addr)) >> 1;
+ 		}
+ 
+ 	      file->bias = ((mod->low_addr & -align) - (ph->p_vaddr & -align));

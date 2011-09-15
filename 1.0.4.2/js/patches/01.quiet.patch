@@ -1,0 +1,48 @@
+diff -ruw src.orig/src/editline/Makefile.ref src/src/editline/Makefile.ref
+--- src.orig/src/editline/Makefile.ref	2007-03-10 18:59:01.000000000 +0100
++++ src/src/editline/Makefile.ref	2007-03-10 19:03:28.000000000 +0100
+@@ -123,7 +123,7 @@
+ 	$(AS) -o $@ $(ASFLAGS) $*.s
+ 
+ $(LIBRARY): $(EDITLINE_OBJS)
+-	$(AR) rv $@ $?
++	$(AR) rc $@ $?
+ 	$(RANLIB) $@
+ 
+ #libedit.a : $(EDITLINE_OBJS) 
+diff -ruw src.orig/src/fdlibm/Makefile.ref src/src/fdlibm/Makefile.ref
+--- src.orig/src/fdlibm/Makefile.ref	2007-03-10 18:59:01.000000000 +0100
++++ src/src/fdlibm/Makefile.ref	2007-03-10 19:03:21.000000000 +0100
+@@ -172,7 +172,7 @@
+ 	lib.exe /out:"$@" $?
+ else
+ $(LIBRARY): $(FDLIBM_OBJS)
+-	$(AR) rv $@ $?
++	$(AR) rc $@ $?
+ 	$(RANLIB) $@
+ endif
+ endif
+diff -ruw src.orig/src/jsconfig.mk src/src/jsconfig.mk
+--- src.orig/src/jsconfig.mk	2007-03-10 18:59:01.000000000 +0100
++++ src/src/jsconfig.mk	2007-03-10 19:01:00.000000000 +0100
+@@ -82,7 +82,7 @@
+   NSPR_SHARED    = nspr20/$(NSPR_VERSION)/$(NSPR_OBJDIR)
+ endif
+ NSPR_VERSIONFILE = $(NSPR_LOCAL)/Version
+-NSPR_CURVERSION := $(shell cat $(NSPR_VERSIONFILE))
++NSPR_CURVERSION := $(shell cat $(NSPR_VERSIONFILE) 2>/dev/null)
+ 
+ get_nspr:
+ 	@echo "Grabbing NSPR component..."
+diff -ruw src.orig/src/rules.mk src/src/rules.mk
+--- src.orig/src/rules.mk	2007-03-10 18:59:01.000000000 +0100
++++ src/src/rules.mk	2007-03-10 19:03:12.000000000 +0100
+@@ -111,7 +111,7 @@
+ 	    /implib:"$(OBJDIR)/$(@F:.dll=.lib)" $^
+ else
+ $(LIBRARY): $(LIB_OBJS)
+-	$(AR) rv $@ $?
++	$(AR) rc $@ $?
+ 	$(RANLIB) $@
+ 
+ $(SHARED_LIBRARY): $(LIB_OBJS)

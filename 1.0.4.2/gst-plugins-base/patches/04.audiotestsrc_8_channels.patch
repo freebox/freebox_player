@@ -1,0 +1,25 @@
+diff -ru gst-plugins-base-0.10.30//gst/audiotestsrc/gstaudiotestsrc.c src/gst/audiotestsrc/gstaudiotestsrc.c
+--- gst-plugins-base-0.10.30//gst/audiotestsrc/gstaudiotestsrc.c	2010-04-09 10:13:11.000000000 +0200
++++ src/gst/audiotestsrc/gstaudiotestsrc.c	2010-08-26 22:29:25.075250001 +0200
+@@ -95,18 +95,18 @@
+         "width = (int) 16, "
+         "depth = (int) 16, "
+         "rate = (int) [ 1, MAX ], "
+-        "channels = (int) [ 1, 2 ]; "
++        "channels = (int) [ 1, 8 ]; "
+         "audio/x-raw-int, "
+         "endianness = (int) BYTE_ORDER, "
+         "signed = (boolean) true, "
+         "width = (int) 32, "
+         "depth = (int) 32,"
+         "rate = (int) [ 1, MAX ], "
+-        "channels = (int) [ 1, 2 ]; "
++        "channels = (int) [ 1, 8 ]; "
+         "audio/x-raw-float, "
+         "endianness = (int) BYTE_ORDER, "
+         "width = (int) { 32, 64 }, "
+-        "rate = (int) [ 1, MAX ], " "channels = (int) [ 1, 2 ]")
++        "rate = (int) [ 1, MAX ], " "channels = (int) [ 1, 8 ]")
+     );
+ 
+ 

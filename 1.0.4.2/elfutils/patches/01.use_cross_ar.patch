@@ -1,0 +1,108 @@
+diff -urN elfutils-0.143/backends/Makefile.in elfutils-0.143.new/backends/Makefile.in
+--- elfutils-0.143/backends/Makefile.in	2009-09-21 17:43:49.000000000 +0200
++++ elfutils-0.143.new/backends/Makefile.in	2009-12-04 17:20:42.000000000 +0100
+@@ -50,7 +50,7 @@
+ CONFIG_CLEAN_FILES =
+ CONFIG_CLEAN_VPATH_FILES =
+ LIBRARIES = $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libebl_alpha_pic_a_AR = $(AR) $(ARFLAGS)
+ libebl_alpha_pic_a_LIBADD =
+diff -urN elfutils-0.143/lib/Makefile.in elfutils-0.143.new/lib/Makefile.in
+--- elfutils-0.143/lib/Makefile.in	2009-09-21 17:43:49.000000000 +0200
++++ elfutils-0.143.new/lib/Makefile.in	2009-12-04 17:11:43.000000000 +0100
+@@ -49,7 +49,7 @@
+ CONFIG_CLEAN_FILES =
+ CONFIG_CLEAN_VPATH_FILES =
+ LIBRARIES = $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libeu_a_AR = $(AR) $(ARFLAGS)
+ libeu_a_LIBADD =
+diff -urN elfutils-0.143/libasm/Makefile.in elfutils-0.143.new/libasm/Makefile.in
+--- elfutils-0.143/libasm/Makefile.in	2009-09-21 17:43:49.000000000 +0200
++++ elfutils-0.143.new/libasm/Makefile.in	2009-12-04 17:19:06.000000000 +0100
+@@ -75,7 +75,7 @@
+   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"
+ LIBRARIES = $(lib_LIBRARIES) $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libasm_a_AR = $(AR) $(ARFLAGS)
+ libasm_a_LIBADD =
+diff -urN elfutils-0.143/libcpu/Makefile.in elfutils-0.143.new/libcpu/Makefile.in
+--- elfutils-0.143/libcpu/Makefile.in	2009-09-21 17:43:49.000000000 +0200
++++ elfutils-0.143.new/libcpu/Makefile.in	2009-12-04 17:17:45.000000000 +0100
+@@ -51,7 +51,7 @@
+ CONFIG_CLEAN_FILES =
+ CONFIG_CLEAN_VPATH_FILES =
+ LIBRARIES = $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libcpu_i386_a_AR = $(AR) $(ARFLAGS)
+ libcpu_i386_a_LIBADD =
+diff -urN elfutils-0.143/libdw/Makefile.in elfutils-0.143.new/libdw/Makefile.in
+--- elfutils-0.143/libdw/Makefile.in	2009-09-21 17:43:49.000000000 +0200
++++ elfutils-0.143.new/libdw/Makefile.in	2009-12-04 17:16:19.000000000 +0100
+@@ -77,7 +77,7 @@
+ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)" \
+ 	"$(DESTDIR)$(pkgincludedir)"
+ LIBRARIES = $(lib_LIBRARIES) $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libdw_a_AR = $(AR) $(ARFLAGS)
+ libdw_a_DEPENDENCIES = $(addprefix ../libdwfl/,$(shell $(AR) t \
+diff -urN elfutils-0.143/libdwfl/Makefile.in elfutils-0.143.new/libdwfl/Makefile.in
+--- elfutils-0.143/libdwfl/Makefile.in	2009-09-21 17:43:49.000000000 +0200
++++ elfutils-0.143.new/libdwfl/Makefile.in	2009-12-04 17:14:39.000000000 +0100
+@@ -54,7 +54,7 @@
+ CONFIG_CLEAN_FILES =
+ CONFIG_CLEAN_VPATH_FILES =
+ LIBRARIES = $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libdwfl_a_AR = $(AR) $(ARFLAGS)
+ libdwfl_a_LIBADD =
+diff -urN elfutils-0.143/libebl/Makefile.in elfutils-0.143.new/libebl/Makefile.in
+--- elfutils-0.143/libebl/Makefile.in	2009-09-21 17:43:50.000000000 +0200
++++ elfutils-0.143.new/libebl/Makefile.in	2009-12-04 17:13:48.000000000 +0100
+@@ -71,7 +71,7 @@
+   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"
+ LIBRARIES = $(lib_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libebl_a_AR = $(AR) $(ARFLAGS)
+ libebl_a_LIBADD =
+diff -urN elfutils-0.143/libelf/Makefile.in elfutils-0.143.new/libelf/Makefile.in
+--- elfutils-0.143/libelf/Makefile.in	2009-09-21 17:43:50.000000000 +0200
++++ elfutils-0.143.new/libelf/Makefile.in	2009-12-04 17:13:00.000000000 +0100
+@@ -78,7 +78,7 @@
+ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)" \
+ 	"$(DESTDIR)$(pkgincludedir)"
+ LIBRARIES = $(lib_LIBRARIES) $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libelf_a_AR = $(AR) $(ARFLAGS)
+ libelf_a_LIBADD =
+diff -urN elfutils-0.143/src/Makefile.in elfutils-0.143.new/src/Makefile.in
+--- elfutils-0.143/src/Makefile.in	2009-09-21 17:43:50.000000000 +0200
++++ elfutils-0.143.new/src/Makefile.in	2009-12-04 17:22:55.000000000 +0100
+@@ -63,7 +63,7 @@
+ CONFIG_CLEAN_FILES =
+ CONFIG_CLEAN_VPATH_FILES =
+ LIBRARIES = $(noinst_LIBRARIES)
+-AR = ar
++AR = $(CROSS)ar
+ ARFLAGS = cru
+ libar_a_AR = $(AR) $(ARFLAGS)
+ libar_a_LIBADD =

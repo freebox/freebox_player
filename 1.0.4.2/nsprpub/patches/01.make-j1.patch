@@ -1,0 +1,12 @@
+diff -ruw src.orig/Makefile.in src/Makefile.in
+--- src.orig/Makefile.in	2009-12-20 18:52:08.000000000 +0100
++++ src/Makefile.in	2009-12-20 18:53:22.000000000 +0100
+@@ -45,8 +45,6 @@
+ 
+ include $(MOD_DEPTH)/config/autoconf.mk
+ 
+-MAKE := $(patsubst -j%,,$(MAKE)) -j1
+-
+ DIRS = config pr lib
+ 
+ ifdef MOZILLA_CLIENT

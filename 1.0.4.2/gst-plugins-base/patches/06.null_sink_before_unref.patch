@@ -1,0 +1,21 @@
+diff -ru gst-plugins-base-0.10.30.4/gst/playback/gstplaybin2.c src/gst/playback/gstplaybin2.c
+--- gst-plugins-base-0.10.30.4/gst/playback/gstplaybin2.c	2010-10-13 13:24:37.000000000 +0200
++++ src/gst/playback/gstplaybin2.c	2010-11-08 11:02:50.970751000 +0100
+@@ -3292,11 +3292,15 @@
+     }
+   }
+   /* delete any custom sinks we might have */
+-  if (group->audio_sink)
++  if (group->audio_sink) {
++    gst_element_set_state (group->audio_sink, GST_STATE_NULL);
+     gst_object_unref (group->audio_sink);
++  }
+   group->audio_sink = NULL;
+-  if (group->video_sink)
++  if (group->video_sink) {
++    gst_element_set_state (group->video_sink, GST_STATE_NULL);
+     gst_object_unref (group->video_sink);
++  }
+   group->video_sink = NULL;
+ 
+   if (group->uridecodebin) {
